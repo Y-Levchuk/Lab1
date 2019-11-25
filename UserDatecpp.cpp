@@ -7,8 +7,6 @@ int dif(UserDate date1, UserDate date2,int mode) {
 	if (mode == 3) return date1.GetHour() - date2.GetHour();
 }
 
-
-
 Date& UserDate::AddSecond(int second) {
 	h += (second / 3600) % 24;
 	min += (second / 60) % 60;
