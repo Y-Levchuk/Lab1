@@ -1,9 +1,13 @@
 ﻿#include <iostream>
-#include "Date.h"
+#include "UserDate.h"
 
 int main()
 {
-	if(IsLeapYear(2000))
-	std::cout << GetDaysInMonth(1, 2000);
+	UserDate f;
+	f.SetDate(26);
+	f.SetYear(2019);
+	f.SetMonth(11);
+	std::cout << f.GetDate() << '.' << f.GetMonth() << '.' << f.GetYear()<<"  "<<f.GetDayOfTheWeek();
+
 	return 0;
 }

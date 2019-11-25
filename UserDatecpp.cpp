@@ -1,6 +1,22 @@
-#define _CRT_SECURE_NO_WARNINGS
-#include "stdio.h"
-#include"UserDate.h"
+#include <stdio.h>
+#include "UserDate.h"
+
+int dif(UserDate date1, UserDate date2,int mode) {
+	if (mode == 1) return date1.GetHour() * 3600 + date1.GetMinute() * 60 + date1.GetSecond() - (date2.GetHour() * 3600 + date2.GetMinute() * 60 + date2.GetSecond());
+	if (mode == 2) return date1.GetHour() * 60 + date1.GetMinute() - (date2.GetHour() * 60 + date2.GetMinute());
+	if (mode == 3) return date1.GetHour() - date2.GetHour();
+}
+
+
+
+Date& UserDate::AddSecond(int second) {
+	h += (second / 3600) % 24;
+	min += (second / 60) % 60;
+	s += second % 60;
+	return *this;
+}
+Date& UserDate::AddMinute(int minute) { return AddSecond(minute * 60); }
+Date& UserDate::AddHour(int hour) { return AddSecond(hour * 3600); }
 
 void UserDate::SetMonth(int month) {
 	m = month;
@@ -34,6 +50,41 @@ Date & UserDate::AddDays(int days) {
 				if (++m > DECEMBER) {
 					m = JANUARY;
 					y++;
+				}
+			}
+		}
+	}
+	return *this;
+}
+
+Date & UserDate::SubDays(int days)
+{
+	if (days < 0) return AddDays(-days);
+	while (days > 0) {
+		if (d - days >= 0) {
+			d -= days;
+			days = 0;
+		}
+		else {
+			int mDay;
+			days -= d;
+			if (m != 1) mDay = GetDaysInMonth(m - 1, y);
+			else mDay = GetDaysInMonth(12, y - 1);
+
+			if (days < mDay) {
+				d = mDay - days;
+				if (--m < JANUARY) {
+					m = DECEMBER;
+					y--;
+				}
+				days = 0;
+			}
+			else {
+				days -= mDay;
+				d = 0;
+				if (--m < JANUARY) {
+					m = DECEMBER;
+					y--;
 				}
 			}
 		}
@@ -75,20 +126,8 @@ Date & UserDate::operator =(const Date & date) {
 	d = date.GetDate();
 	m = date.GetMonth();
 	y = date.GetYear();
+	h = date.GetHour();
+	min = date.GetMinute();
+	s = date.GetSecond();
 	return *this;
-}
-bool UserDate::operator < (const Date & date) const {
-	int date_d = date.GetDate();
-	int date_m = date.GetMonth();
-	int date_y = date.GetYear();
-	return y < date_y || (y == date_y && (m < date_m || (m == date_m && d < date_d)));
-}
-bool UserDate::operator ==(const Date & date) const {
-	return y == date.GetYear() && m == date.GetMonth()&& d == date.GetDate();
-}
-bool UserDate::operator >(const Date & date) const {
-	int date_d = date.GetDate();
-	int date_m = date.GetMonth();
-	int  date_y = date.GetYear();
-	return y > date_y || (y == date_y && (m > date_m || (m == date_m && d > date_d)));
 }

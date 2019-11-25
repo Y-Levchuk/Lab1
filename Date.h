@@ -4,6 +4,12 @@ enum Month { JANUARY = 1, FEBRUARY, MARCH, APRIL, MAY, JUNE, JULY, AUGUST, SEPTE
 class Date {
 public:
 	virtual ~Date() {}
+	virtual int GetSecond() const = 0;
+	virtual void SetSecond(int second) = 0;
+	virtual int GetMinute() const = 0;
+	virtual void SetMinute(int minute) = 0;
+	virtual int GetHour() const = 0;
+	virtual void SetHour(int hour) = 0;
 	virtual int GetDate() const = 0;
 	virtual void SetDate(int day) = 0;
 	virtual int GetMonth() const = 0;
@@ -23,12 +29,6 @@ public:
 	virtual Date& operator -=(int days) { return SubDays(days); }
 	virtual Date& operator ++() { return AddDays(); }
 	virtual Date& operator --() { return SubDays(); }
-	virtual bool operator <  (const Date& date) const { return !(*this >= date); }
-	virtual bool operator == (const Date& date) const { return !(*this != date); }
-	virtual bool operator >  (const Date& date) const { return !(*this <= date); }
-	virtual bool operator <= (const Date& date) const { return !(*this >  date); }
-	virtual bool operator != (const Date& date) const { return !(*this == date); }
-	virtual bool operator >= (const Date& date) const { return !(*this <  date); }
 
 	virtual const char* GetString() const;
 

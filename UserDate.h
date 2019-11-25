@@ -3,24 +3,31 @@
 #include "Date.h"
 
 class UserDate : Date {
-private:
-	int d;
-	int m;
-	int y;
+	int s, min, h, d, m, y;
 public:
-	UserDate(int d, int m, int y) :d(d), m(m), y(y) {}
-	UserDate() {
-		time_t tm;
-		time(&tm);
-		struct tm* dt = localtime(&tm);
-		d = dt->tm_mday;
-		m = dt->tm_mon - +1;
-		y = dt->tm_year + 2000;
-	}
+	UserDate(int s, int min, int h, int d, int m, int y) :s(s), min(min), h(h), d(d), m(m), y(y) {}
+	UserDate() :s(1), min(1), h(1), d(29), m(5), y(1453) {}//29 травня 1453 року, завдяки артилерії, мусульманські війська взяли Константинополь штурмом.
 	UserDate(const Date& date) { *this = date; }
+	int GetDayOfTheWeek() {
+		static const int monthLength[2][12] = { {0,31,59,90,120,151,181,212,243,273,304,334},{0,31,60,91,121,152,182,213,244,274,305,335} };
+		int year = y;
+		int days = year * 365 + year / 4 - year / 100 + year / 400;
+		bool leap = IsLeapYear(y);
+		if (leap) days--;
+		return (days + monthLength[IsLeapYear(y)][m - 1] + d + 5) % 7 + 1;
+	}
+
+	void SetSecond(int second) { s = second; }
+	int GetSecond()const { return s; }
+
+	void SetMinute(int minute) { min = minute; }
+	int GetMinute()const { return min; }
+
+	void SetHour(int hour) { h = hour; }
+	int GetHour()const { return h; }
+
 	void SetDate(int day) { d = day; }
 	int GetDate()const { return d; }
-
 
 	void SetMonth(int month);
 	int GetMonth()const { return m; }
@@ -28,6 +35,9 @@ public:
 	void SetYear(int year);
 	int GetYear() const { return y; }
 
+	Date& AddSecond(int second = 1);
+	Date& AddMinute(int minute = 1);
+	Date& AddHour(int hour = 1);
 	Date& AddDays(int days = 1);
 	Date& AddMonth(int month = 1);
 	Date& AddYear(int year = 1);
@@ -36,8 +46,4 @@ public:
 	Date& SubYear(int year = 1);
 
 	Date& operator=(const Date& date);
-
-	bool operator < (const Date& date) const;
-	bool operator ==(const Date& date) const;
-	bool operator > (const Date& date) const;
 };
