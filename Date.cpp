@@ -11,7 +11,7 @@ int GetDaysInMonth(int month, int year) {
 
 const char* Date::GetString() const {
 	static const char* monthName[] = { "January", "February","March","April","May","June","July","August","September","October","November","December" };
-	char* res = new char[12];
+	char* res = new char[20];
 	sprintf(res, "%2d-%s-%4d", GetDate(), monthName[GetMonth() - 1], GetYear());
 	return res;
 }
