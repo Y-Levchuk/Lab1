@@ -1,3 +1,3 @@
 # Lab1
-Список 1 - Графи
-Список 2 - Дата і час
+List 1 - Graph
+List 2 - Date and time
