@@ -11,7 +11,7 @@ Date& UserDate::AddSecond(int second) {
 	h += (second / 3600) % 24;
 	min += (second / 60) % 60;
 	s += second % 60;
-	return *this;
+	return AddDays(second / (3600 * 24));
 }
 Date& UserDate::AddMinute(int minute) { return AddSecond(minute * 60); }
 Date& UserDate::AddHour(int hour) { return AddSecond(hour * 3600); }
