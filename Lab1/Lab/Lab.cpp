@@ -3,6 +3,10 @@
 #include "MatrixGraph.h"
 using namespace std;
 
+/*
+	Оператор виводу екземпляру класу UserDate
+	Приймає як параметри по ссилці: поток виводу і екземпляру класу UserDate
+*/
 std::ostream& operator<< (std::ostream& out, UserDate& f)
 {
 	out << f.GetSecond() << ':' << f.GetMinute() << ':' << f.GetHour() << "  ";
@@ -10,6 +14,10 @@ std::ostream& operator<< (std::ostream& out, UserDate& f)
 	return out;
 }
 
+/*
+	Оператор вводу екземпляру класу UserDate
+	Приймає як параметри по ссилці: поток вводу і екземпляру класу UserDate
+*/
 std::istream& operator>> (std::istream& in, UserDate& f)
 {
 	int tmp;
@@ -34,6 +42,10 @@ std::istream& operator>> (std::istream& in, UserDate& f)
 	return in;
 }
 
+/*
+	Головна функція з ui
+	Не приймає параметрів
+*/
 int main()
 {
 	int n,n1,n2;
